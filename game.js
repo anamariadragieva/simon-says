@@ -19,6 +19,22 @@ $(document).on("keydown", function() {
     }
 });
 
+// Start for small screen
+$(".start").click(function() {
+    if (gameStarted === false) {
+
+        $(".start").hide();
+
+        console.log("Game started now!");
+
+        nextSequence();
+        gameStarted = !gameStarted;
+
+    } else {
+        console.log("Game has already started!");
+    }
+});
+
 
 // find which button is clicked and add to sequence
 $(".btn").on("click", function() {
@@ -103,6 +119,9 @@ function startOver() {
     level = 0;
     gamePattern = [];
     gameStarted = false;
+    if (window.matchMedia("(max-width: 600px)").matches) {
+        $(".start").show();
+      }   
 }
 
 
