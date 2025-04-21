@@ -5,36 +5,47 @@ var gameStarted = false;
 var level = 0;
 
 
-// Start
-$(document).on("keydown", function() {
-    if (gameStarted === false) {
-
-        console.log("Game started now!");
-
-        nextSequence();
-        gameStarted = !gameStarted;
-
+$(document).ready(function () {
+    // Set initial message and button visibility
+    if (window.innerWidth < 726) {
+        $("#level-title").text("Tap Start to Play");
+        $(".start").show();
     } else {
-        console.log("Game has already started!");
-    }
-});
-
-// Start for small screen
-$(".start").click(function() {
-    if (gameStarted === false) {
-
+        $("#level-title").text("Press Any Key to Start");
         $(".start").hide();
+    }
+});
 
-        console.log("Game started now!");
+// Desktop: Start on key press
+$(document).on("keydown", function() {
+    if (!gameStarted && window.innerWidth >= 726) {
 
-        nextSequence();
-        gameStarted = !gameStarted;
+        startGame();
 
     } else {
         console.log("Game has already started!");
     }
 });
 
+
+// Mobile: Start on button click
+$(".start").on("click", function() {
+    if (!gameStarted && window.innerWidth < 726) {
+
+        $(".start").text("start").hide();
+        startGame();
+        
+    } else {
+        console.log("Game has already started!");
+    }
+});
+
+// Start
+function startGame() {
+    console.log("Game started now!");
+    gameStarted = true;
+    nextSequence();
+}
 
 // find which button is clicked and add to sequence
 $(".btn").on("click", function() {
@@ -72,8 +83,11 @@ function nextSequence() {
     console.log(gamePattern);
 
     // flash random button and play sound
-    $("#" + randomChosenColor).fadeOut(150).fadeIn(150);
-    playSound(randomChosenColor);
+    setTimeout(function () {
+        $("#" + randomChosenColor).fadeOut(150).fadeIn(150);
+        playSound(randomChosenColor);
+    }, 100);
+
 }
 
 
@@ -102,11 +116,17 @@ function checkAnswer(currentLevel) {
         $("#level-title").text("Game Over!");
         setTimeout(function() {
             $("#level-title").text("Press Any Key to Restart");
+            if (window.innerWidth < 726) {
+                $("#level-title").text("Tap Restart");
+                $(".start").text("restart").show();
+            }
         }, 800);
         
         $("body").addClass("game-over");
+        $("footer").addClass("game-over");
         setTimeout(function() {
             $("body").removeClass("game-over");
+            $("footer").removeClass("game-over");
         }, 200);
 
         startOver();
@@ -114,6 +134,7 @@ function checkAnswer(currentLevel) {
         console.log(userClickedPattern);
     }
 }
+
 
 function startOver() {
     level = 0;
@@ -138,6 +159,7 @@ function animatePress(currentColor) {
         $("#" + currentColor).removeClass("pressed");
     }, 100);
 }
+
 
 
 
