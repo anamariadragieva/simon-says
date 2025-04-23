@@ -50,11 +50,13 @@ html, body {
   transition: transform 0.s ease, box-shadow 0.2s ease;
 }
 
-.btn:hover {
-  cursor: pointer;
-  transform: scale(1.02);
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+@media (min-width: 726px) {
+  .btn:hover {
+    cursor: pointer;
+    transform: scale(1.02);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
 }
 
 .red {
